@@ -40,11 +40,15 @@ def callback_message(callback):
         bot.send_video(callback.message.chat.id, file_id_2, reply_markup=markup)
 
     elif callback.data == 'watch-second-video':
-        btn = types.InlineKeyboardButton('Перейти к следующему уроку', callback_data='second-video')
-        markup.add(btn)
+        btn1 = types.InlineKeyboardButton('Получить шаблон для заполнения',
+                                          url='https://docs.google.com/spreadsheets/d/1bRH70a33U8rBZ9gGLFMztwqwkmIx1EqrOiWgRe5r9oQ/edit?usp=sharing')
+        btn2 = types.InlineKeyboardButton('Перейти к следующему уроку', callback_data='second-video')
+        markup.row(btn1)
+        markup.row(btn2)
+
 
         bot.send_message(callback.message.chat.id,
-                         'Отлично!👍 Теперь сделайте практическое задание по этому уроку. Когда будете готовы, нажмите на кнопку "Перейти к следующему уроку"',
+                         'Отлично!👍 Теперь сделайте практическое задание по этому уроку. По кнопке "Получить шаблон" вы можете скачать тот шаблон, который показывается в уроке. Когда будете готовы, нажмите на кнопку "Перейти к следующему уроку"',
                          reply_markup=markup)
 
     elif callback.data == 'second-video':
@@ -104,12 +108,10 @@ def callback_message(callback):
         bot.send_video(callback.message.chat.id, file_id_6, reply_markup=markup)
 
     elif callback.data == 'watch-last-video':
-        btn1 = types.InlineKeyboardButton('Получить шаблон для заполнения', url='https://docs.google.com/spreadsheets/d/1bRH70a33U8rBZ9gGLFMztwqwkmIx1EqrOiWgRe5r9oQ/edit?usp=sharing')
-        btn2 = types.InlineKeyboardButton('Получить пример заполнения', url='https://docs.google.com/spreadsheets/d/1QCJWJlJNf_8FF8nDAd4E5w4QrPS8Yiy0Hv1-560xStY/edit?usp=sharing')
-        btn3 = types.InlineKeyboardButton('Перейти к следующему уроку', callback_data='last-video')
+        btn1 = types.InlineKeyboardButton('Получить пример заполнения', url='https://docs.google.com/spreadsheets/d/1QCJWJlJNf_8FF8nDAd4E5w4QrPS8Yiy0Hv1-560xStY/edit?usp=sharing')
+        btn2 = types.InlineKeyboardButton('Перейти к следующему уроку', callback_data='last-video')
         markup.row(btn1)
         markup.row(btn2)
-        markup.row(btn3)
 
         bot.send_message(callback.message.chat.id,
                          'Отлично!👍 Вы завершили обучение. Поздравляю вас с вашими достижениями в финансах. У меня для вас есть полезные материалы в подарок, скорее забирайте их и переходите к заключительной части',
@@ -145,7 +147,7 @@ def callback_message(callback):
                          reply_markup=markup)
 
     elif callback.data == 'feedback':
-        btn = types.InlineKeyboardButton('Оставить отзыв', url='https://forms.yandex.ru/u/66f2daa3d04688166975cf21')
+        btn = types.InlineKeyboardButton('Оставить отзыв', url='https://forms.yandex.ru/cloud/67110e5f4936394ae7488639')
         markup.add(btn)
 
         bot.send_message(callback.message.chat.id,

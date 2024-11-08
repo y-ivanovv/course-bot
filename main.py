@@ -10,6 +10,7 @@ file_id_4 = "BAACAgIAAxkBAAICcmcPfcWJRcFZyrmjLPV8vX0XOgNBAAKwWQACpEl5SMe30PY8VX7
 file_id_5 = "BAACAgIAAxkBAAICc2cPff0hyGPH10y5m_B1Rp9hsSTTAAK2WQACpEl5SB0BpAtJS3i6NgQ"
 file_id_6 = "BAACAgIAAxkBAAICdGcPfli-tEQLqYkImyyxY_sCz3MgAAK6WQACpEl5SI6Uz8DLxyNeNgQ"
 file_id_7 = "BAACAgIAAxkBAAICdWcPfoUKbcx-UDCDKJzivNou4MZPAAK8WQACpEl5SD0r6RMcCxRfNgQ"
+chanel_id = -1002300892848
 
 @bot.callback_query_handler(func=lambda callback: True)
 def callback_message(callback):
@@ -170,11 +171,22 @@ def callback_message(callback):
 
 @bot.message_handler(commands=['start'])
 def start(message):
+    # Кнопка подписки
+    subscribe = types.InlineKeyboardMarkup()
+    btn = types.InlineKeyboardButton('Подписаться✅', url='https://t.me/+W2NpoHFtXZhjZTky')
+    subscribe.add(btn)
+
     markup = types.InlineKeyboardMarkup()
     btn1 = types.InlineKeyboardButton('Продолжить', callback_data='introductory-video')
     btn2 = types.InlineKeyboardButton('Позже', callback_data='show-info')
     markup.row(btn1, btn2)
 
-    bot.send_message(message.chat.id, '📌Добро пожаловать на мини-курс “Управленка за 2 часа” от консалтинговой компании “Масштаб”!', reply_markup=markup)
+    # Проверка подписки на канал
+    chat_member = bot.get_chat_member(chanel_id, message.chat.id)
+
+    if not chat_member.status in ['member', 'creator', 'administrator']:
+        bot.send_message(message.chat.id, 'Пожалуйста, подпишитесь на наш канал, а затем нажмите на /start, чтобы продолжить', reply_markup=subscribe)
+    else:
+        bot.send_message(message.chat.id, '📌Добро пожаловать на мини-курс “Управленка за 2 часа” от консалтинговой компании “Масштаб”!', reply_markup=markup)
 
 bot.polling(none_stop=True)
